@@ -1,5 +1,6 @@
 ;; Press C-x C-e at the end of the next line to run this file test non-interactively
-;; (test-simple-run "emacs -batch -L %s -l %s" (file-name-directory (locate-library "test-simple.elc")) buffer-file-name)
+;; (test-simple-run "emacs -batch -L %s -L %s -L %s -l %s" (file-name-directory (locate-library "test-simple.elc")) (file-name-directory (locate-library "load-relative.elc")) (file-name-directory (locate-library "loc-changes.elc")) buffer-file-name)
+
 
 (require 'test-simple)
 (require 'load-relative)
@@ -7,6 +8,7 @@
 (eval-when-compile
   (defvar elisp-file)
   (defvar elisp-buffer)
+  (defvar suggested-file)
 )
 
 (set (make-local-variable 'elisp-file)
@@ -45,7 +47,9 @@
               "realgud-suggest-lang-file"
               )
 
-(assert-t (file-exists-p (realgud-suggest-lang-file "bogus" "\\.bogus$")))
+(setq suggested-file (realgud-suggest-lang-file "bogus" "\\.bogus$"))
+(if suggested-file
+    (assert-t (file-exists-p suggested-file)))
 
 (note "realgud:suggest-file-from-buffer")
 

@@ -1,4 +1,4 @@
-;; Copyright (C) 2015-2019 Free Software Foundation, Inc
+;; Copyright (C) 2015-2019, 2026 Free Software Foundation, Inc
 ;; Author: Rocky Bernstein <rocky@gnu.org>
 
 ;; This program is free software; you can redistribute it and/or modify
@@ -105,6 +105,7 @@
   loc-regexp   ;; Location regular expression string
   file-group
   line-group
+  column-group
   alt-file-group
   alt-line-group
   text-group
@@ -234,7 +235,7 @@
 					 (substring (symbol-name object) 1)))
 		((symbolp object)      (json-encode-string
 					 (symbol-name object)))
-		((numberp object)      (json-encode-number object))
+		((numberp object)      (json-encode object))
 		((arrayp object)       (json-encode-array object))
 		((hash-table-p object) (realgud:org-mode-encode-htable object))
 		;; ((listp object)        (realgud:org-mode-encodelist object))
@@ -470,6 +471,7 @@ values set in the debugger's init.el."
 	     :loc-regexp (realgud-sget 'loc-pat 'regexp)
 	     :file-group (realgud-sget 'loc-pat 'file-group)
 	     :line-group (realgud-sget 'loc-pat 'line-group)
+	     :column-group (realgud-sget 'loc-pat 'column-group)
 	     :alt-file-group (realgud-sget 'loc-pat 'alt-file-group)
 	     :alt-line-group (realgud-sget 'loc-pat 'alt-line-group)
 	     :text-group (realgud-sget 'loc-pat 'text-group)
